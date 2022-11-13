@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <title>{Health Worker Name} Dashboard</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://use.typekit.net/jdw6sjn.css" />
+
+    <link href="css/attached.css" rel="stylesheet" />
+  </head>
+  <body class="text-center">
+    <main class="w-100 m-auto">
+      <div style="max-width: 1260px; margin: auto">
+        <div class="titleBar" style="text-align: left">
+          <svg
+            class="w-6 h-6 mb-4"
+            style="width: 60px; height: 60px"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+            <path
+              d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+            ></path>
+          </svg>
+          <span style="font-size: 32px">Hi, {Health Worker Name}</span>
+          <p>Select the student vaccination status you want to edit from above.</p>
+        </div>
+        <div class="form">
+          <input id="filterBar" type="text" class="form-control form-input" placeholder="Filter student names..." style="margin-bottom:20px">
+        </div>
+        <div
+          class="studentListWrapper"
+        >
+        <p id="noResults">No results found.</p>
+        </div>
+      </div>
+    </main>
+    <style>
+      body,
+      html {
+        font-family: finalsix, sans-serif;
+      }
+
+      .cardTitle {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .card {
+        border: 1px solid #e5e5e5;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding: 10px;
+      }
+
+      .studentName {
+        font-size: 18px;
+        min-width: 150px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+
+      @media screen and (max-width: 768px) {
+        .studentNameWrapper{
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+          text-align:left;
+        }
+      }
+        
+      }
+    </style>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var studentName = ["Cristina Schultz", "Rodney Houston", "Lindsay Cantu", "Terry Jefferson", "Amya Nichols", "Damian Reese", "Khalil Mcgrath", "Claudia Moreno", "Alena Ramos", "Breanna Bray", "Joel Pruitt", "Antoine Washington", "Yasmin Mcintosh", "Immanuel Haney", "Aileen Dodson", "Roberto Tate", "Brayden Berg", "Kyler Cooper", "Krista Tapia", "Sophie Valencia", "Chasity Bird", "Clarence Dudley", "Miley Glenn", "Justice Mckinney", "Chasity Malone", "Mayra Conley", "Krish Barber", "Chaya Kennedy", "Jerimiah Ware", "Zavier Brown"];
+
+      function renderStudentList() {
+        // for each name in student Name, create a button
+        studentName.forEach(function (name) {
+          var button = document.createElement("button");
+          button.className = "btn btn-outline-success studentName";
+          button.innerHTML = name;
+          document.querySelector(".studentListWrapper").appendChild(button);
+        });
+      }
+      
+      var currentShowingStudents = []
+      // filter student names based on the input
+      function filterStudentNames() {
+        currentShowingStudents = []
+        var filter = document.querySelector("#filterBar").value.toUpperCase();
+        var studentNames = document.querySelectorAll(".studentName");
+        studentNames.forEach(function (name) {
+          // if the name contains the filter, show it
+          if (name.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            name.style.display = "";
+            currentShowingStudents.push(name)
+          } else {
+            name.style.display = "none";
+          }
+        });
+        // check if all names are hidden
+        if (currentShowingStudents.length == 0) {
+          $("#noResults").show();
+        } else {
+          $("#noResults").hide();
+        }
+      }
+
+      // everytime the input changes, filter the student names
+      $("#filterBar").on("change keydown paste input", function () {
+        filterStudentNames();
+      });
+      // onload
+      $(document).ready(function () {
+        renderStudentList();
+        $("#noResults").hide();
+      });
+    </script>
+  </body>
+</html>

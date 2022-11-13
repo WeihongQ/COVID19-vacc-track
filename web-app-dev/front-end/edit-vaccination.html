@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <title>Editing Record #{RecordID}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+
+  <link rel="stylesheet" href="https://use.typekit.net/jdw6sjn.css" />
+
+  <link href="css/attached.css" rel="stylesheet" />
+</head>
+
+<body class="text-center">
+  <main class="w-100 m-auto">
+    <div style="max-width: 1260px; margin: auto">
+      <div class="titleBar" style="text-align: left">
+        <svg class="w-6 h-6 mb-4" style="width: 60px; height: 60px" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+          <path
+            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z">
+          </path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222">
+          </path>
+        </svg>
+        <span style="font-size: 32px">Editing Record #{recordID} for {student_realname}</span>
+      </div>
+      <div class="form">
+        <div class="form-floating">
+          <input class="form-control" id="firstVacName" placeholder="First Vaccination Name" />
+          <label for="firstVacName">First Vaccination Name</label>
+        </div>
+        <div class="form-floating" style="text-align:left">
+          <p style="margin-bottom:0">First Vaccination Date</p>
+          <div class="input-group date" id="datepicker_first_vacc">
+            <input type="text" class="form-control" readonly />
+            <span class="input-group-append">
+              <span class="input-group-text bg-white d-block">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="form-floating" style="margin-top:30px">
+          <input class="form-control" id="secondVacName" placeholder="Second Vaccination Name" />
+          <label for="secondVacName">Second Vaccination Name</label>
+        </div>
+        <div class="form-floating" style="text-align:left">
+          <p style="margin-bottom:0">Second Vaccination Date</p>
+          <div class="input-group date" id="datepicker_second_vacc">
+            <input type="text" class="form-control" readonly />
+            <span class="input-group-append">
+              <span class="input-group-text bg-white d-block">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="form-floating" style="margin-top:30px">
+          <input class="form-control" id="thirdVacName" placeholder="Third Vaccination Name" />
+          <label for="thirdVacName">Third Vaccination Name</label>
+        </div>
+        <div class="form-floating" style="text-align:left">
+          <p style="margin-bottom:0">Third Vaccination Date</p>
+          <div class="input-group date" id="datepicker_third_vacc">
+            <input type="text" class="form-control" readonly />
+            <span class="input-group-append">
+              <span class="input-group-text bg-white d-block">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </span>
+          </div>
+          <button id="submitBtn" style="margin-top:10px" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal"
+            data-bs-target="#confirmChanges">
+            Submit
+          </button>
+        </div>
+      </div>
+      <div class="modal fade" id="confirmChanges" tabindex="-1" aria-labelledby="confirmChangesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmChangesLabel">
+                Confirm Changes
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to submit these changes?</p>
+              <span id="changes-confirm"></span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="button" class="btn btn-primary" type="submit" id="submitForm">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </main>
+  <style>
+    body,
+    html {
+      font-family: finalsix, sans-serif;
+    }
+
+    .form-floating {
+      margin-bottom: 10px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script>
+    var vaccRecords = [
+      "Moderna",
+      "01/01/2022",
+      "Moderna",
+      "02/01/2022",
+      "Moderna",
+      "03/01/2022",
+    ];
+
+    // render vaccRecords to the form, and set the datepickers to the correct date
+    function renderVaccRecords() {
+      $("#firstVacName").val(vaccRecords[0]);
+      $("#datepicker_first_vacc").datepicker("setDate", vaccRecords[1]);
+      $("#secondVacName").val(vaccRecords[2]);
+      $("#datepicker_second_vacc").datepicker("setDate", vaccRecords[3]);
+      $("#thirdVacName").val(vaccRecords[4]);
+      $("#datepicker_third_vacc").datepicker("setDate", vaccRecords[5]);
+    }
+
+    function autoAddZero(input){
+      // if input less than 10, add a zero in front of it
+      if(input < 10){
+        return "0" + input;
+      } else {
+        return input;
+      }
+    }
+
+    function getFormattedDates() {
+      var firstVacDate = $("#datepicker_first_vacc").datepicker("getDate");
+      var firstVacDateFormatted =
+        autoAddZero(firstVacDate.getMonth() +
+        1) +
+        "/" +
+        autoAddZero(firstVacDate.getDate()) +
+        "/" +
+        firstVacDate.getFullYear();
+      var secondVacDate = $("#datepicker_second_vacc").datepicker("getDate");
+      var secondVacDateFormatted =
+      autoAddZero(secondVacDate.getMonth() +
+        1) +
+        "/" +
+        autoAddZero(secondVacDate.getDate()) +
+        "/" +
+        secondVacDate.getFullYear();
+      var thirdVacDate = $("#datepicker_third_vacc").datepicker("getDate");
+      var thirdVacDateFormatted =
+      autoAddZero(thirdVacDate.getMonth() +
+        1) +
+        "/" +
+        autoAddZero(thirdVacDate.getDate()) +
+        "/" +
+        thirdVacDate.getFullYear();
+      return [firstVacDateFormatted, secondVacDateFormatted, thirdVacDateFormatted];
+    }
+
+    // update changes to changes-confirm
+    function renderConfirmChanges() {
+      var changes = "";
+      var flag = false;
+      var formattedDates = getFormattedDates();
+      // check if any changes were made, update the changes string
+      if ($("#firstVacName").val() != vaccRecords[0]) {
+        changes +=
+          "First Vaccination Name: " +
+          $("#firstVacName").val() +
+          " -> " +
+          vaccRecords[0] +
+          "<br />";
+        flag = true;
+      }
+      if (formattedDates[0] != vaccRecords[1]) {
+        changes +=
+          "First Vaccination Date: " +
+          formattedDates[0] +
+          " -> " +
+          vaccRecords[1] +
+          "<br />";
+        flag = true;
+      }
+      if ($("#secondVacName").val() != vaccRecords[2]) {
+        changes +=
+          "Second Vaccination Name: " +
+          $("#secondVacName").val() +
+          " -> " +
+          vaccRecords[2] +
+          "<br />";
+        flag = true;
+      }
+      if (formattedDates[1] != vaccRecords[3]) {
+        changes +=
+          "Second Vaccination Date: " +
+          formattedDates[1] +
+          " -> " +
+          vaccRecords[3] +
+          "<br />";
+        flag = true;
+      }
+      if ($("#thirdVacName").val() != vaccRecords[4]) {
+        changes +=
+          "Third Vaccination Name: " +
+          $("#thirdVacName").val() +
+          " -> " +
+          vaccRecords[4] +
+          "<br />";
+        flag = true;
+      }
+      if (formattedDates[2] != vaccRecords[5]) {
+        changes +=
+          "Third Vaccination Date: " +
+          formattedDates[2] +
+          " -> " +
+          vaccRecords[5] +
+          "<br />";
+        flag = true;
+      }
+      
+      if (flag) {
+        $("#changes-confirm").html(changes);
+      } else {
+        $("#changes-confirm").html("No changes were made.");
+      }
+    }
+
+    // when click submit, update grades and render confirm changes
+    $("#submitBtn").click(function () {
+      renderConfirmChanges();
+    });
+
+    // when click submitForm, submit form
+    $("#submitForm").click(function () {
+      // update vaccRecords
+      var formattedDates = getFormattedDates();
+      vaccRecords[0] = $("#firstVacName").val();
+      vaccRecords[1] = formattedDates[0];
+      vaccRecords[2] = $("#secondVacName").val();
+      vaccRecords[3] = formattedDates[1];
+      vaccRecords[4] = $("#thirdVacName").val();
+      vaccRecords[5] = formattedDates[2];
+      // submit form
+      alert("Submitted form: " + vaccRecords);
+    });
+
+    $(document).ready(function () {
+      renderVaccRecords();
+      // init datepickers
+      $("#datepicker_first_vacc").datepicker({
+        format: "mm/dd/yyyy",
+        autoclose: true,
+        todayHighlight: true,
+      });
+      $("#datepicker_second_vacc").datepicker({
+        format: "mm/dd/yyyy",
+        autoclose: true,
+        todayHighlight: true,
+      });
+      $("#datepicker_third_vacc").datepicker({
+        format: "mm/dd/yyyy",
+        autoclose: true,
+        todayHighlight: true,
+      });
+    });
+  </script>
+</body>
+
+</html>
